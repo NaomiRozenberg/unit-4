@@ -1,1 +1,2 @@
-
+1. When not including all the stakeholders in the design of a new system there is a risk that they will not approve the design changes. The business's users might chose to use a different site where they are more familiar with the design.  
+2. Testing should be taking place at every stage of the development process in order to ensure that by the time the programer has finished with the development process, the code wouldn't be full of errors and many changes will have to be done by the programmer. 
