@@ -132,7 +132,20 @@ try:
             flash('Profile picture updated successfully', 'success')
 ```
 
+**The uage of Tailwind CSS in the Forum Application**
+Tailwind CSS is a utility-first CSS framework. It is  customizable and helps with createung responsive and modern UI designs quickly. Here's an overview of how Tailwind CSS is used in the forum application.
 
+In order to intgrate it,
+first I had to add it into the head of each .html file. 
+
+```html
+<script src="https://cdn.tailwindcss.com"></script>
+```
+and than look throgh the website's documuntation [Raf 4] and add classes to diffrent divs in my html files such as in the example below. 
+
+```html
+<div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+```
 
 
 
@@ -148,5 +161,6 @@ References:
 1. https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/
 2. https://www.geeksforgeeks.org/importance-of-hashing/
 3. https://www.geeksforgeeks.org/how-to-upload-file-in-python-flask/
+4. https://tailwindcss.com/docs/installation
 
 
