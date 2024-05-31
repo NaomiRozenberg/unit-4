@@ -162,6 +162,10 @@ I then referred to the documentation and added classes to various divs in my HTM
 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 ```
 
+**Summary**
+
+In this development phase, a secure login system was implemented using sessions and hashed passwords. User registration was enhanced with email validation, and the logout process ensured privacy by clearing sessions. A picture upload feature was added, involving secure file handling and storage. Additionally, Tailwind CSS was integrated to improve the application's UI, creating a modern and responsive design.
+
 ---
 
 **References:**
@@ -172,6 +176,4 @@ I then referred to the documentation and added classes to various divs in my HTM
 4. [Tailwind CSS Documentation](https://tailwindcss.com/docs/installation)
 
 ---
-
-
 
