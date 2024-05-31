@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white font-semibold text-xl">IB Forums</div>
+        <div>
+            <a href="{{ url_for('user_list') }}" class="text-gray-300 hover:text-white mx-4">Users</a>
+            <a href="{{ url_for('main_page') }}" class="text-gray-300 hover:text-white mx-4">Home</a>
+            <a href="{{ url_for('profile') }}" class="text-gray-300 hover:text-white mx-4">Profile</a>
+            <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-white mx-4">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Forum</h2>
+      <h3 class="text-xl font-semibold text-gray-900">Followers: {{ follow_count }}</h3>
+      {% if followers %}
+        <ul class="list-disc list-inside">
+          {% for follower in followers %}
+            <li>{{ follower.username }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No followers yet.</p>
+      {% endif %}
+    </div>
+    {% if posts %}
+      <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        {% for post in posts %}
+          <article class="flex max-w-xl flex-col items-start justify-between">
+            <div class="flex items-center gap-x-4 text-xs text-gray-500">
+              <time datetime="{{ post[3] }}">{{ post[3] }}</time>
+              <span>by {{ post[4] }}</span>
+            </div>
+            <div class="group relative">
+              <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                <a href="{{ url_for('see_post', forum_id=forum_id, post_id=post[0]) }}">{{ post[1] }}</a>
+              </h3>
+              <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{{ post[2] }}</p>
+            </div>
+            <div class="relative mt-8 flex items-center gap-x-4 text-sm leading-6">
+              <div class="font-semibold text-blue-900">
+                Likes: {{ post[5] }}
+                <form action="{{ url_for('like_post', forum_id=forum_id, post_id=post[0]) }}" method="POST" class="like-form" id="like-form">
+                    <input type="hidden" name="forum_id" value="{{ forum_id }}">
+                    <button type="submit" class="like-btn">
+                        {% if post[6] %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" alt="Heart icon">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                            </svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" alt="Heart icon">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                            </svg>
+                        {% endif %}
+                        <span class="like-count">{{ post[5] }}</span>
+                    </button>
+                </form>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No posts available in this forum.</p>
+    {% endif %}
+  </div>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<!-- Navigation -->
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white font-semibold text-xl">IB Forums</div>
+        <div>
+            <a href="{{ url_for('user_list') }}" class="text-gray-300 hover:text-white mx-4">Users</a>
+            <a href="{{ url_for('main_page') }}" class="text-gray-300 hover:text-white mx-4">Home</a>
+            <a href="{{ url_for('profile') }}" class="text-gray-300 hover:text-white mx-4">Profile</a>
+            <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-white mx-4">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<section class="py-8 px-4 sm:px-8 lg:px-4 xl:px-8">
+    <header class="bg-white shadow p-4 sm:px-8 sm:py-6 rounded-lg">
+        <h2 class="font-semibold text-2xl text-gray-800 mb-4">IB Subject Specific Forums</h2>
+    </header>
+
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+        {% for forum in forums %}
+        <li>
+            <div class="block bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                <div class="py-4 px-6 flex justify-between items-center">
+                    <div>
+                        <a href="{{ url_for('see_forum', forum_id=forum[0]) }}" class="text-lg font-semibold text-gray-800">{{ forum[1] }}</a>
+                        <p class="mt-2 text-gray-600">{{ forum[2] }}</p>
+                        <p class="mt-2 text-gray-600">Followers: {{ forum[3] }}</p>
+                        {% if session.user_id %}
+                        <form action="{{ url_for('follow_forum', forum_id=forum[0]) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Follow</button>
+                        </form>
+                        <form action="{{ url_for('unfollow_forum', forum_id=forum[0]) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Unfollow</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+
+</body>
+</html>
+
+
+
+
+
+

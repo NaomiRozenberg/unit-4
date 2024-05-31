@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Additional CSS styles can be added here */
+    </style>
+</head>
+<body class="bg-gray-100">
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white font-semibold text-xl">IB Forums</div>
+        <div>
+            <a href="{{ url_for('user_list') }}"class="text-gray-300 hover:text-white mx-4">Users</a>
+            <a href="{{ url_for('main_page') }}" class="text-gray-300 hover:text-white mx-4">Home</a>
+            <a href="{{ url_for('profile') }}" class="text-gray-300 hover:text-white mx-4">Profile</a>
+            <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-white mx-4">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="max-w-3xl mx-auto py-12">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <form action="{{ url_for('edit_profile') }}" method="post" enctype="multipart/form-data">
+            <div class="px-4 py-5 sm:px-6">
+                <h2 class="text-2xl font-bold text-gray-900">Edit Profile</h2>
+                <p class="mt-2 text-sm text-gray-600">Update your profile information here.</p>
+            </div>
+            <div class="border-t border-gray-200">
+                <dl class="divide-y divide-gray-200">
+                    <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Name</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                            <input type="text" name="name" value="{{ user_info['name'] }}" class="border border-gray-300 px-3 py-1 w-full">
+                        </dd>
+                    </div>
+                    <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Email Address</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                            <input type="email" name="email" value="{{ user_info['email'] }}" class="border border-gray-300 px-3 py-1 w-full">
+                        </dd>
+                    </div>
+                        <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Profile Picture</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+            <input type="file" name="profile_picture" accept="image/jpeg,image/png" class="border border-gray-300 px-3 py-1 w-full">
+        </dd>
+    </div>
+                </dl>
+            </div>
+            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="uploded_picture">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

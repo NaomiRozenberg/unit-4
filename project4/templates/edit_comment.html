@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Comment</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white font-semibold text-xl">IB Forums</div>
+        <div>
+            <a href="{{ url_for('user_list') }}"class="text-gray-300 hover:text-white mx-4">Users</a>
+            <a href="{{ url_for('main_page') }}" class="text-gray-300 hover:text-white mx-4">Home</a>
+            <a href="{{ url_for('profile') }}" class="text-gray-300 hover:text-white mx-4">Profile</a>
+            <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-white mx-4">Logout</a>
+        </div>
+    </div>
+</nav>
+<div class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Edit Comment</h2>
+      <form action="{{ url_for('edit_comment', comment_id=comment[0]) }}" method="POST" class="mt-4">
+        <div class="mb-4">
+          <label for="new_comment_text" class="block text-gray-700 text-sm font-bold mb-2">New Comment:</label>
+          <textarea name="new_comment_text" id="new_comment_text" rows="3" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            {% if comment %}
+              {{ comment[3] }}  {% endif %}
+          </textarea>
+        </div>
+        <div class="flex justify-end">
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >Update Comment</button>
+        </div>
+      </form>
+      {% if not comment %}
+        <p>Comment not found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+
+

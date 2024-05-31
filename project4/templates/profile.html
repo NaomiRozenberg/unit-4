@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Additional CSS styles can be added here */
+    </style>
+</head>
+<body class="bg-gray-100">
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white font-semibold text-xl">IB Forums</div>
+        <div>
+            <a href="{{ url_for('user_list') }}"class="text-gray-300 hover:text-white mx-4">Users</a>
+            <a href="{{ url_for('main_page') }}" class="text-gray-300 hover:text-white mx-4">Home</a>
+            <a href="{{ url_for('profile') }}" class="text-gray-300 hover:text-white mx-4">Profile</a>
+            <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-white mx-4">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="max-w-3xl mx-auto py-12">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h2 class="text-2xl font-bold text-gray-900">User Profile</h2>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl class="divide-y divide-gray-200">
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Name</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                        {{ user_info[1] }}
+                    </dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Email Address</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                        {{ user_info[2] }}
+                    </dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Profile Picture</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                        <img src="static/uploads/profile_{{ user_info[0] }}.jpeg" alt="Profile Picture" class="w-20 h-20 rounded-full">
+                    </dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500"></dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                        <a href="{{ url_for('edit_profile') }}" class="text-blue-500 hover:underline">Edit Profile</a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
+</body>
+</html>

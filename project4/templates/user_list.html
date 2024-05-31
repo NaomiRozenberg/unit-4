@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white font-semibold text-xl">IB Forums</div>
+        <div>
+            <a href="{{ url_for('user_list') }}" class="text-gray-300 hover:text-white mx-4">Users</a>
+            <a href="{{ url_for('main_page') }}" class="text-gray-300 hover:text-white mx-4">Home</a>
+            <a href="{{ url_for('profile') }}" class="text-gray-300 hover:text-white mx-4">Profile</a>
+            <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-white mx-4">Logout</a>
+        </div>
+    </div>
+</nav>
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold text-center mb-4">User List</h1>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for user in users %}
+        <li class="bg-white shadow-md rounded-lg p-4">
+            <h2 class="text-xl font-semibold">{{ user[1] }}</h2>
+            <p class="text-gray-600">{{ user[2] }}</p>
+            <img src="{{ url_for('static', filename='uploads/profile_' ~ user[0] ~ '.jpeg') }}" alt="Profile Picture" class="w-20 h-20 rounded-full">
+            <p class="text-gray-600">Followers: {{ user[3] }}</p>
+            {% if session.user_id %}
+            <form action="{{ url_for('follow_user', user_id=user[0]) }}" method="POST" style="display:inline;">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Follow</button>
+            </form>
+            <form action="{{ url_for('unfollow_user', user_id=user[0]) }}" method="POST" style="display:inline;">
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Unfollow</button>
+            </form>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
+
+

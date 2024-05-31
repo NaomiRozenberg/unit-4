@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post[3] }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-white font-semibold text-xl">IB Forums</div>
+        <div>
+            <a href="{{ url_for('user_list') }}"class="text-gray-300 hover:text-white mx-4">Users</a>
+            <a href="{{ url_for('main_page') }}" class="text-gray-300 hover:text-white mx-4">Home</a>
+            <a href="{{ url_for('profile') }}" class="text-gray-300 hover:text-white mx-4">Profile</a>
+            <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-white mx-4">Logout</a>
+        </div>
+    </div>
+</nav>
+<div class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ post[3] }}</h2>
+      <p class="mt-2 text-lg leading-8 text-gray-600">{{ post[4] }}</p>
+      <div class="mt-6 flex items-center">
+        <div class="text-sm text-gray-500">
+          <p>Posted by {{ post[6] }} on {{ post[5] }}</p>
+          <form action="{{ url_for('like_post', forum_id=forum_id, post_id=post[0]) }}" method="POST" class="like-form">
+            <input type="hidden" name="forum_id" value="{{ forum_id }}">
+            <button type="submit" class="like-btn">
+              {% if post[6] %}
+                Likes: <span id="like-count">{{ like_count }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" alt="Heart icon">
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                </svg>
+              {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" alt="Heart icon">
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                </svg>
+              {% endif %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Display comments -->
+<div class="bg-white py-8 sm:py-12">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h3 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Comments</h3>
+      {% if comments %}
+        {% for comment in comments %}
+          <div class="border-t border-gray-200 py-4">
+            <p class="text-gray-800">{{ comment[1] }}</p>
+            <p class="text-gray-500 text-sm">Commented by {{ comment[3] }} on {{ comment[2] }}</p>
+            {% if current_user_id == comment[4] %}
+              <div>
+                <a href="{{ url_for('edit_comment', comment_id=comment[0]) }}" class="text-blue-500 hover:text-blue-700 mr-2">Edit</a>
+                <form action="{{ url_for('delete_comment', comment_id=comment[0]) }}" method="POST" class="inline">
+                  <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                </form>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-gray-500">No comments yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Add comment form -->
+<div class="bg-white py-8 sm:py-12">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h3 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Add Comment</h3>
+      <form action="{{ url_for('add_comment', forum_id=forum_id, post_id=post[0]) }}" method="POST" class="mt-4">
+        <div class="mb-4">
+          <label for="comment" class="block text-gray-700 text-sm font-bold mb-2">Your Comment:</label>
+          <textarea name="comment" id="comment" rows="3" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+        </div>
+        <div class="flex justify-end">
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Comment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    function disableButton(button) {
+                button.disabled = true;
+        setTimeout(function() {
+            button.disabled = false;
+        }, 1000); // Disable for 1 second
+    }
+</script>
+
+</body>
+</html>
+
